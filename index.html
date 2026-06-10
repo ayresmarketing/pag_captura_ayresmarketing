@@ -233,6 +233,14 @@
     .proof-card img { width:100%;height:100%;object-fit:cover;object-position:center;display:block;opacity:.94; }
     /* prints verticais: ancorar no topo, onde estão os números/gráficos */
     .proof-card.tall img { object-position:center top; }
+    /* duas faixas horizontais (só mobile, ativadas no @media) */
+    .proof-marquee { display:none; }
+    .proof-row { display:flex;gap:12px;width:max-content;will-change:transform; }
+    .proof-row img { height:150px;width:auto;border-radius:12px;display:block;border:1px solid rgba(255,255,255,.1);box-shadow:0 8px 20px rgba(0,0,0,.45);opacity:.95; }
+    @keyframes marquee-l { from{transform:translate3d(0,0,0);} to{transform:translate3d(-50%,0,0);} }
+    @keyframes marquee-r { from{transform:translate3d(-50%,0,0);} to{transform:translate3d(0,0,0);} }
+    .proof-row-a { animation:marquee-l 38s linear infinite; }
+    .proof-row-b { animation:marquee-r 46s linear infinite; }
     /* vinheta: escurece centro (texto legível) e funde topo/base/laterais */
     .proof-vignette {
       position:absolute;inset:0;z-index:2;pointer-events:none;
@@ -262,7 +270,7 @@
       line-height:1.65;max-width:520px;margin:0 auto;
     }
     @media (prefers-reduced-motion:reduce) {
-      .proof-card { animation:none; }
+      .proof-card, .proof-row-a, .proof-row-b { animation:none; }
     }
 
     /* ═══ SEÇÃO 4 — METODOLOGIA ═══ */
@@ -349,7 +357,14 @@
 
     .secao-sobre { background:var(--bg-secondary);padding:var(--section-padding);position:relative;overflow:hidden; }
     .secao-sobre::before { content:'';position:absolute;inset:0;background:radial-gradient(ellipse 700px 500px at 8% 50%,rgba(0,128,255,.07) 0%,transparent 70%);pointer-events:none; }
-    .sobre-inner { display:grid;grid-template-columns:60% 40%;gap:80px;align-items:center; }
+    .sobre-inner {
+      display:grid;grid-template-columns:1.45fr 1fr;column-gap:80px;align-items:start;
+      grid-template-areas:"super media" "titulo media" "textos media";grid-template-rows:auto auto 1fr;
+    }
+    .sobre-inner > .supertitulo { grid-area:super; }
+    .sobre-titulo { grid-area:titulo; }
+    .sobre-textos { grid-area:textos; }
+    .sobre-media  { grid-area:media;align-self:center; }
     .sobre-titulo { font-size:clamp(28px,3.5vw,44px);font-weight:700;letter-spacing:-.025em;color:#fff;line-height:1.15;margin-bottom:32px; }
     .sobre-texto  { font-size:17px;font-weight:300;color:rgba(255,255,255,.75);line-height:1.8;margin-bottom:20px; }
     .sobre-texto:last-child { margin-bottom:0; }
@@ -416,9 +431,10 @@
     @media (max-width:960px) {
       .qual-cards-wrap { grid-template-columns:1fr 1fr; }
       .servicos-grid { grid-template-columns:1fr;max-width:480px;margin:0 auto; }
-      .sobre-inner { grid-template-columns:1fr;gap:44px; }
-      .sobre-foto { max-width:380px;margin:0 auto; }
-      .sobre-titulo,.sobre-texto { text-align:center; }
+      .sobre-inner { grid-template-columns:1fr;column-gap:0;
+        grid-template-areas:"super" "titulo" "media" "textos";grid-template-rows:auto;text-align:center; }
+      .sobre-media { max-width:380px;margin:6px auto 30px; }
+      .sobre-titulo { margin-bottom:24px; }
       .secao-resultados { --card-w:380px;--card-h:252px;--radius:660px;--drop:178px; }
 
       /* Metodologia → lista vertical estática (sem pin / troca por scroll) */
@@ -439,10 +455,10 @@
       .navbar { border-radius:0;width:100%;top:0;padding:8px 14px; }
       .section-header { margin-bottom:44px; }
 
-      /* Hero */
-      .hero { background-size:cover;background-position:68% top; }
-      .hero-overlay { background:linear-gradient(to bottom,rgba(3,5,10,.8) 0%,rgba(3,7,18,.5) 42%,rgba(3,5,10,.94) 100%); }
-      .hero-content { padding:116px 20px 64px; }
+      /* Hero — foto mais discreta (menos visível no topo) e textos mais acima */
+      .hero { background-size:cover;background-position:68% top;align-items:flex-start; }
+      .hero-overlay { background:linear-gradient(to bottom,rgba(3,5,10,.93) 0%,rgba(3,7,18,.66) 45%,rgba(3,5,10,.97) 100%); }
+      .hero-content { padding:104px 20px 56px; }
       .hero-inner { max-width:100%; }
       .hero-label { font-size:11px;margin-bottom:22px; }
       .hero-headline { font-size:clamp(32px,8.6vw,44px);margin-bottom:20px; }
@@ -456,9 +472,13 @@
       .qual-headline { margin-bottom:40px; }
       .qual-final { margin-top:40px;font-size:15px; }
 
-      /* Resultados / carrossel */
-      .secao-resultados { --card-w:244px;--card-h:162px;--radius:430px;--drop:118px;--spin-dur:60s;min-height:74vh; }
-      .proof-content { padding:36px 16px;margin-bottom:14vh; }
+      /* Resultados — troca o cilindro 3D por DUAS faixas de fotos (ordens diferentes) */
+      .secao-resultados { min-height:82vh; }
+      .proof-stage, .proof-vignette { display:none; }            /* sem cilindro e SEM borda de degradê */
+      .proof-marquee { display:flex;position:absolute;inset:0;z-index:1;flex-direction:column;justify-content:center;gap:18px;overflow:hidden;pointer-events:none; }
+      .proof-content { padding:32px 16px;margin-bottom:30vh; }    /* sobe o texto */
+      .proof-content::before { content:'';position:absolute;z-index:-1;left:50%;top:50%;transform:translate(-50%,-50%);width:160%;height:150%;pointer-events:none;
+        background:radial-gradient(ellipse 56% 46% at 50% 50%,rgba(3,5,10,.94) 0%,rgba(3,5,10,.72) 46%,transparent 74%); }
 
       /* Depoimentos / Sobre */
       .depoimentos-grid { grid-template-columns:1fr; }
@@ -522,7 +542,7 @@
       </h1>
       <p class="hero-sub">Você já tem um produto bom. O que falta é uma operação de tráfego que venda todos os dias com previsibilidade, sem queimar margem e sem depender de sorte ou de mais um lançamento para o mês fechar no azul.</p>
       <div class="hero-cta-group">
-        <a href="#aplicacao" class="btn-primary btn-primary-lg btn-sweep">Fazer minha aplicação</a>
+        <a href="#servicos" class="btn-primary btn-primary-lg btn-sweep">Fazer minha aplicação</a>
         <span class="hero-microcopy">Vagas limitadas · Apenas clientes selecionados</span>
       </div>
     </div>
@@ -622,6 +642,9 @@
     </div>
   </div>
 
+  <!-- Mobile: duas faixas de fotos (preenchidas via JS) -->
+  <div class="proof-marquee" id="proofMarquee" aria-hidden="true"></div>
+
   <div class="proof-vignette" aria-hidden="true"></div>
 
   <!-- Texto central -->
@@ -706,10 +729,10 @@
       <p class="section-subheadline">Nada do que escrevemos aqui vale mais do que a experiência de quem já viveu isso na prática.</p>
     </div>
     <div class="depoimentos-grid">
-      <div class="depoimento-card"><div class="depoimento-video-area"><div class="depoimento-play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M8 5.5v13l11-6.5L8 5.5z" fill="#0080ff"/></svg></div></div><div class="depoimento-info"><div class="depoimento-nome">Cliente 01</div><div class="depoimento-cargo">Substituir pelo nome e nicho real</div></div></div>
-      <div class="depoimento-card"><div class="depoimento-video-area"><div class="depoimento-play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M8 5.5v13l11-6.5L8 5.5z" fill="#0080ff"/></svg></div></div><div class="depoimento-info"><div class="depoimento-nome">Cliente 02</div><div class="depoimento-cargo">Substituir pelo nome e nicho real</div></div></div>
-      <div class="depoimento-card"><div class="depoimento-video-area"><div class="depoimento-play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M8 5.5v13l11-6.5L8 5.5z" fill="#0080ff"/></svg></div></div><div class="depoimento-info"><div class="depoimento-nome">Cliente 03</div><div class="depoimento-cargo">Substituir pelo nome e nicho real</div></div></div>
-      <div class="depoimento-card"><div class="depoimento-video-area"><div class="depoimento-play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M8 5.5v13l11-6.5L8 5.5z" fill="#0080ff"/></svg></div></div><div class="depoimento-info"><div class="depoimento-nome">Cliente 04</div><div class="depoimento-cargo">Substituir pelo nome e nicho real</div></div></div>
+      <div class="depoimento-card"><div class="depoimento-video-area" data-yt="aeJZSJwT_X4"><div class="depoimento-play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M8 5.5v13l11-6.5L8 5.5z" fill="#0080ff"/></svg></div></div><div class="depoimento-info"><div class="depoimento-nome">Cliente 01</div><div class="depoimento-cargo">Substituir pelo nome e nicho real</div></div></div>
+      <div class="depoimento-card"><div class="depoimento-video-area" data-yt="duSRzO0l8ZU"><div class="depoimento-play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M8 5.5v13l11-6.5L8 5.5z" fill="#0080ff"/></svg></div></div><div class="depoimento-info"><div class="depoimento-nome">Cliente 02</div><div class="depoimento-cargo">Substituir pelo nome e nicho real</div></div></div>
+      <div class="depoimento-card"><div class="depoimento-video-area" data-yt="yWMjikcp7A4"><div class="depoimento-play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M8 5.5v13l11-6.5L8 5.5z" fill="#0080ff"/></svg></div></div><div class="depoimento-info"><div class="depoimento-nome">Cliente 03</div><div class="depoimento-cargo">Substituir pelo nome e nicho real</div></div></div>
+      <div class="depoimento-card"><div class="depoimento-video-area" data-yt="R0ju-BZZbwU"><div class="depoimento-play-btn"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M8 5.5v13l11-6.5L8 5.5z" fill="#0080ff"/></svg></div></div><div class="depoimento-info"><div class="depoimento-nome">Cliente 04</div><div class="depoimento-cargo">Substituir pelo nome e nicho real</div></div></div>
     </div>
   </div>
 </section>
@@ -723,9 +746,9 @@
       <p class="section-subheadline">Independente do momento da sua operação, temos um caminho para você.</p>
     </div>
     <div class="servicos-grid">
-      <div class="servico-card"><div class="servico-media"><img src="assets/images/box_preco_opt/paginas.jpg" alt="" loading="lazy" decoding="async"></div><div class="servico-nome">Criação de Páginas</div><div class="servico-preco">A partir de R$ 897</div><p class="servico-desc">Páginas que convertem, criadas do zero com estratégia, copy e estrutura técnica no ponto.</p><ul class="servico-features"><li>Páginas de captura, obrigado e vendas</li><li>Copy estratégica inclusa</li><li>Traqueamento configurado</li><li>Otimização de velocidade</li></ul><a href="#aplicacao" class="btn-primary" style="width:100%">Quero uma página</a></div>
-      <div class="servico-card destaque"><div class="servico-badge">Mais popular</div><div class="servico-media"><img src="assets/images/box_preco_opt/consultoria.jpg" alt="" loading="lazy" decoding="async"></div><div class="servico-nome">Consultoria de Negócio</div><div class="servico-preco">Valor sob consulta</div><p class="servico-desc">Uma hora focada no que realmente importa: entender onde está o gargalo da sua operação e sair com um plano claro de próximos passos.</p><ul class="servico-features"><li>1 hora de consultoria</li><li>Reunião gravada</li><li>Plano de negócio com próximos passos</li><li>Análise completa da operação</li><li>Materiais complementares (quando aplicável)</li></ul><a href="#aplicacao" class="btn-primary" style="width:100%">Fazer minha aplicação</a></div>
-      <div class="servico-card"><div class="servico-media"><img src="assets/images/box_preco_opt/gestao.jpg" alt="" loading="lazy" decoding="async"></div><div class="servico-nome">Gestão de Performance</div><div class="servico-preco">Sob consulta</div><p class="servico-desc">Para infoprodutores que querem uma operação de tráfego completa, estratégica e gerenciada por quem entende do negócio. Os entregáveis são definidos após a análise da sua operação, porque cada projeto é único.</p><ul class="servico-features"></ul><a href="#aplicacao" class="btn-primary" style="width:100%">Fazer minha aplicação</a></div>
+      <div class="servico-card"><div class="servico-media"><img src="assets/images/box_preco_opt/paginas.jpg" alt="" loading="lazy" decoding="async"></div><div class="servico-nome">Criação de Páginas</div><div class="servico-preco">A partir de R$ 897</div><p class="servico-desc">Páginas que convertem, criadas do zero com estratégia, copy e estrutura técnica no ponto.</p><ul class="servico-features"><li>Páginas de captura, obrigado e vendas</li><li>Copy estratégica inclusa</li><li>Traqueamento configurado</li><li>Otimização de velocidade</li></ul><a href="https://wa.me/3188183316" target="_blank" rel="noopener" class="btn-primary" style="width:100%">Quero uma página</a></div>
+      <div class="servico-card destaque"><div class="servico-badge">Mais popular</div><div class="servico-media"><img src="assets/images/box_preco_opt/consultoria.jpg" alt="" loading="lazy" decoding="async"></div><div class="servico-nome">Consultoria de Negócio</div><div class="servico-preco">Valor sob consulta</div><p class="servico-desc">Uma hora focada no que realmente importa: entender onde está o gargalo da sua operação e sair com um plano claro de próximos passos.</p><ul class="servico-features"><li>1 hora de consultoria</li><li>Reunião gravada</li><li>Plano de negócio com próximos passos</li><li>Análise completa da operação</li><li>Materiais complementares (quando aplicável)</li></ul><a href="https://wa.me/3188183316" target="_blank" rel="noopener" class="btn-primary" style="width:100%">Fazer minha aplicação</a></div>
+      <div class="servico-card"><div class="servico-media"><img src="assets/images/box_preco_opt/gestao.jpg" alt="" loading="lazy" decoding="async"></div><div class="servico-nome">Gestão de Performance</div><div class="servico-preco">Sob consulta</div><p class="servico-desc">Para infoprodutores que querem uma operação de tráfego completa, estratégica e gerenciada por quem entende do negócio. Os entregáveis são definidos após a análise da sua operação, porque cada projeto é único.</p><ul class="servico-features"></ul><a href="https://wa.me/3188183316" target="_blank" rel="noopener" class="btn-primary" style="width:100%">Fazer minha aplicação</a></div>
     </div>
   </div>
 </section>
@@ -734,18 +757,18 @@
 <section class="secao-sobre" id="sobre">
   <div class="container">
     <div class="sobre-inner">
-      <div>
-        <p class="supertitulo">Sobre a Ayres Marketing</p>
-        <h2 class="sobre-titulo">Antes de você conhecer a agência, precisa entender o que veio antes dela.</h2>
+      <p class="supertitulo">Sobre a Ayres Marketing</p>
+      <h2 class="sobre-titulo">Antes de você conhecer a agência, precisa entender o que veio antes dela.</h2>
+      <div class="sobre-media">
+        <img src="assets/images/foto_quem_sou_eu/samuel.jpg" alt="Samuel Ayres" class="sobre-foto" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="sobre-foto-placeholder"><span>Samuel Ayres</span></div>
+        <div class="sobre-foto-info"><div class="sobre-foto-nome">Samuel Ayres</div><div class="sobre-foto-cargo">Fundador, Ayres Marketing</div></div>
+      </div>
+      <div class="sobre-textos">
         <p class="sobre-texto">Sou uma pessoa ansiosa. Sempre fui preocupado com o futuro, e no mundo do empreendedorismo, essa ansiedade tem nome: imprevisibilidade. O infoprodutor nunca sabe o dia de amanhã.</p>
         <p class="sobre-texto">Foi exatamente essa dor que me fez construir uma estrutura diferente. Comecei a desenvolver um processo que gerasse vendas todos os dias: em perpétuos, em lançamentos, em webinários.</p>
         <p class="sobre-texto">Depois de mais de <span class="destaque-num">8 anos</span> trabalhando com marketing e de ter ajudado clientes a faturarem mais de <span class="destaque-num">R$ 30 milhões</span> pela internet, hoje ajudo infoprodutores a resolverem exatamente as dores que eu mesmo já enfrentei.</p>
         <p class="sobre-texto">A Ayres Marketing não só aplica esse método nos nossos clientes, como também nos nossos próprios projetos.</p>
-      </div>
-      <div>
-        <img src="assets/images/foto_quem_sou_eu/samuel.jpg" alt="Samuel Ayres" class="sobre-foto" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-        <div class="sobre-foto-placeholder"><span>Samuel Ayres</span></div>
-        <div class="sobre-foto-info"><div class="sobre-foto-nome">Samuel Ayres</div><div class="sobre-foto-cargo">Fundador, Ayres Marketing</div></div>
       </div>
     </div>
   </div>
@@ -773,7 +796,7 @@
     <h2 class="cta-headline">Pronto para ter uma operação que vende todos os dias?</h2>
     <p class="cta-sub">Faça sua aplicação agora. Nossa equipe vai analisar sua operação e te mostrar exatamente o que precisa mudar.</p>
     <div class="cta-btn-wrapper">
-      <a href="#" class="btn-primary btn-primary-lg btn-sweep">Fazer minha aplicação →</a>
+      <a href="#servicos" class="btn-primary btn-primary-lg btn-sweep">Fazer minha aplicação →</a>
       <span class="cta-microcopy">Vagas limitadas · Processo seletivo · Resposta em até 48h</span>
     </div>
   </div>
@@ -865,12 +888,21 @@
     if(all.length>5){const last=all[all.length-1];gsap.to(last,{opacity:0,x:50,duration:.3,ease:EASE_IN,onComplete:()=>last.remove()});}
   }
 
-  /* QUAL CARDS — entrada scroll-driven, ícones estáticos */
+  /* Detecta celular: no mobile usamos só fade-in simples (sem scrub/pin que bugava) */
+  const isMobile = window.matchMedia('(max-width:640px)').matches;
+
+  /* QUAL CARDS — desktop: scroll-driven; mobile: aparece ao descer */
   document.querySelectorAll('.qual-card-new').forEach((card,i)=>{
-    ScrollTrigger.create({
-      trigger:card,start:'top 90%',end:'top 40%',scrub:.7,
-      onUpdate(s){gsap.set(card,{opacity:s.progress,y:(1-s.progress)*50});}
-    });
+    if(isMobile){
+      ScrollTrigger.create({trigger:card,start:'top 90%',once:true,
+        onEnter(){gsap.to(card,{opacity:1,y:0,duration:.6,ease:EASE_OUT});}
+      });
+    } else {
+      ScrollTrigger.create({
+        trigger:card,start:'top 90%',end:'top 40%',scrub:.7,
+        onUpdate(s){gsap.set(card,{opacity:s.progress,y:(1-s.progress)*50});}
+      });
+    }
   });
 
   /* Frase final */
@@ -890,15 +922,26 @@
     const f=document.getElementById('metodologiaProgressFill');
     if(f)f.style.height=(((e+1)/5)*100)+'%';
   }
-  ScrollTrigger.create({trigger:'.metodologia-container',start:'top top',end:'bottom bottom',scrub:.4,invalidateOnRefresh:true,
-    onUpdate(s){setEtapa(Math.min(4,Math.floor(s.progress*5)));}
-  });
-  document.querySelectorAll('.metodologia-step').forEach((s,i)=>{
-    s.addEventListener('click',()=>{
-      const c=document.querySelector('.metodologia-container');
-      window.scrollTo({top:c.getBoundingClientRect().top+scrollY+(i/4)*(c.offsetHeight-innerHeight),behavior:'smooth'});
+  if(!isMobile){
+    /* Desktop: troca de etapa via scroll (pin/scrub) */
+    ScrollTrigger.create({trigger:'.metodologia-container',start:'top top',end:'bottom bottom',scrub:.4,invalidateOnRefresh:true,
+      onUpdate(s){setEtapa(Math.min(4,Math.floor(s.progress*5)));}
     });
-  });
+    document.querySelectorAll('.metodologia-step').forEach((s,i)=>{
+      s.addEventListener('click',()=>{
+        const c=document.querySelector('.metodologia-container');
+        window.scrollTo({top:c.getBoundingClientRect().top+scrollY+(i/4)*(c.offsetHeight-innerHeight),behavior:'smooth'});
+      });
+    });
+  } else {
+    /* Mobile: lista vertical — cada card aparece ao descer */
+    gsap.set('.metodologia-card',{opacity:0,y:30});
+    gsap.utils.toArray('.metodologia-card').forEach(card=>{
+      ScrollTrigger.create({trigger:card,start:'top 88%',once:true,
+        onEnter(){gsap.to(card,{opacity:1,y:0,duration:.6,ease:EASE_OUT});}
+      });
+    });
+  }
 
   /* REVEALS GENÉRICOS */
   function rv(sel,ex={}){gsap.from(sel,{scrollTrigger:{trigger:sel,start:'top 78%',once:true},opacity:0,y:40,duration:.8,ease:EASE_OUT,...ex});}
@@ -1080,6 +1123,39 @@
       frag.appendChild(el);
     }
     host.appendChild(frag);
+  })();
+
+  /* DEPOIMENTOS — vídeos do YouTube (thumbnail + clique para tocar) */
+  document.querySelectorAll('.depoimento-video-area[data-yt]').forEach(area=>{
+    const id=area.getAttribute('data-yt');
+    area.style.backgroundImage=`linear-gradient(rgba(3,5,10,.28),rgba(3,5,10,.42)),url(https://img.youtube.com/vi/${id}/hqdefault.jpg)`;
+    area.style.backgroundSize='cover';
+    area.style.backgroundPosition='center';
+    area.style.cursor='pointer';
+    area.addEventListener('click',()=>{
+      area.innerHTML=`<iframe src="https://www.youtube.com/embed/${id}?autoplay=1&rel=0&playsinline=1" title="Depoimento" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen style="position:absolute;inset:0;width:100%;height:100%;border:0;"></iframe>`;
+    });
+  });
+
+  /* RESULTADOS (mobile) — duas faixas de fotos em ordens diferentes */
+  (function(){
+    const wrap=document.getElementById('proofMarquee');
+    if(!wrap || !isMobile) return;
+    const base='assets/images/fotos_sessao3_opt/';
+    const imgs=['proof1.jpg','proof2.jpg','proof3.jpg','proof4.jpg','proof5.jpg','proof6.jpg','proof7.jpg','proof8.jpg','proof9.jpg','proof10.jpg'];
+    const orderA=[0,1,2,3,4,5,6,7,8,9];
+    const orderB=[5,8,1,9,3,0,7,2,6,4]; /* ordem diferente p/ não repetir a de cima */
+    function buildRow(order,cls){
+      const r=document.createElement('div'); r.className='proof-row '+cls;
+      [...order,...order].forEach(i=>{ /* duplica p/ loop perfeito */
+        const im=document.createElement('img');
+        im.src=base+imgs[i]; im.alt=''; im.loading='lazy'; im.decoding='async';
+        r.appendChild(im);
+      });
+      return r;
+    }
+    wrap.appendChild(buildRow(orderA,'proof-row-a'));
+    wrap.appendChild(buildRow(orderB,'proof-row-b'));
   })();
 
   window.addEventListener('resize',()=>ScrollTrigger.refresh(),{passive:true});
