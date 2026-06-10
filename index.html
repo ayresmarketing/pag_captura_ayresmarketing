@@ -235,12 +235,13 @@
     .proof-card.tall img { object-position:center top; }
     /* duas faixas horizontais (só mobile, ativadas no @media) */
     .proof-marquee { display:none; }
-    .proof-row { display:flex;gap:12px;width:max-content;will-change:transform; }
-    .proof-row img { height:150px;width:auto;border-radius:12px;display:block;border:1px solid rgba(255,255,255,.1);box-shadow:0 8px 20px rgba(0,0,0,.45);opacity:.95; }
+    .proof-row { display:flex;gap:10px;width:max-content;will-change:transform; }
+    /* tamanho FIXO: largura determinística (loop sem piscar) e faixa < 4096px (não dropa no GPU mobile) */
+    .proof-row img { flex:0 0 auto;width:184px;height:120px;object-fit:cover;border-radius:12px;display:block;border:1px solid rgba(255,255,255,.1);box-shadow:0 8px 20px rgba(0,0,0,.45);opacity:.95; }
     @keyframes marquee-l { from{transform:translate3d(0,0,0);} to{transform:translate3d(-50%,0,0);} }
     @keyframes marquee-r { from{transform:translate3d(-50%,0,0);} to{transform:translate3d(0,0,0);} }
-    .proof-row-a { animation:marquee-l 38s linear infinite; }
-    .proof-row-b { animation:marquee-r 46s linear infinite; }
+    .proof-row-a { animation:marquee-l 24s linear infinite; }
+    .proof-row-b { animation:marquee-r 28s linear infinite; }
     /* vinheta: escurece centro (texto legível) e funde topo/base/laterais */
     .proof-vignette {
       position:absolute;inset:0;z-index:2;pointer-events:none;
