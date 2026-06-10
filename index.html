@@ -1151,7 +1151,8 @@
       const r=document.createElement('div'); r.className='proof-row '+cls;
       [...order,...order].forEach(i=>{ /* duplica p/ loop perfeito */
         const im=document.createElement('img');
-        im.src=base+imgs[i]; im.alt=''; im.loading='lazy'; im.decoding='async';
+        /* eager: numa marquee as imagens ficam fora da viewport; lazy não carregaria */
+        im.src=base+imgs[i]; im.alt=''; im.decoding='async';
         r.appendChild(im);
       });
       return r;
