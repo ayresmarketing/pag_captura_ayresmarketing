@@ -25,6 +25,7 @@ module.exports = async (req, res) => {
     const whatsappRaw = String(body.whatsapp || '').trim();
     const tipo        = String(body.tipo || '').trim();
     const faturamento = String(body.faturamento || '').trim();
+    const plano       = String(body.plano || '').trim();
 
     if (!nome || !email || !whatsappRaw || !tipo || !faturamento) {
       res.status(400).json({ ok: false, error: 'Campos obrigatorios faltando' });
@@ -43,6 +44,8 @@ Nome: ${nome}
 E-mail: ${email}
 
 WhatsApp: wa.me/${num}
+
+Plano de interesse: ${plano || 'Não informado'}
 
 O lead é: ${tipo}
 

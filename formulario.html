@@ -87,13 +87,13 @@
 <body>
   <div class="topbar">
     <img src="assets/images/logo_empresa/upscalemedia-transformed%20(4).png" alt="Ayres Marketing" onerror="this.style.display='none'">
-    <a class="voltar" href="index.html">← Voltar</a>
+    <a class="voltar" href="/">← Voltar</a>
   </div>
 
   <div class="card">
     <div class="eyebrow">Processo seletivo</div>
     <h1>Fazer minha aplicação</h1>
-    <p class="sub">Preencha os campos abaixo. Nosso time vai analisar a sua operação e entrar em contato.</p>
+    <p class="sub" id="introSub">Preencha os campos abaixo. Nosso time vai analisar a sua operação e entrar em contato.</p>
 
     <form id="leadForm" novalidate>
       <div class="field">
@@ -141,6 +141,12 @@
     const form = document.getElementById('leadForm');
     const btn  = document.getElementById('submitBtn');
     const err  = document.getElementById('formError');
+    const introSub = document.getElementById('introSub');
+
+    const plano = (new URLSearchParams(window.location.search).get('plano') || '').trim();
+    if (plano) {
+      introSub.textContent = `Você está se candidatando para: ${plano}. Preencha os campos abaixo e nosso time vai analisar a sua operação.`;
+    }
 
     function showErr(msg){ err.textContent = msg; err.style.display = 'block'; }
 
@@ -153,7 +159,8 @@
         email: form.email.value.trim(),
         whatsapp: form.whatsapp.value.trim(),
         tipo: (form.querySelector('input[name="tipo"]:checked') || {}).value || '',
-        faturamento: (form.querySelector('input[name="faturamento"]:checked') || {}).value || ''
+        faturamento: (form.querySelector('input[name="faturamento"]:checked') || {}).value || '',
+        plano: plano
       };
 
       if (!data.nome || !data.email || !data.whatsapp) { showErr('Preencha nome, e-mail e WhatsApp.'); return; }
@@ -169,7 +176,7 @@
         });
         const json = await res.json().catch(() => ({}));
         if (res.ok && json.ok) {
-          window.location.href = 'obrigado.html';
+          window.location.href = '/obrigado';
         } else {
           showErr('Não foi possível enviar agora. Tente novamente em instantes.');
           btn.disabled = false; btn.textContent = 'Enviar aplicação';
