@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fazer minha aplicação · Ayres Marketing</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{ --azul:#0080ff; --azul-dark:#0040cc; --bg:#03050a; }
+    *,*::before,*::after{ box-sizing:border-box;margin:0;padding:0; }
+    body{
+      font-family:'Montserrat',sans-serif;color:#fff;min-height:100vh;
+      background:
+        radial-gradient(ellipse 700px 500px at 18% 12%,rgba(0,128,255,.10),transparent 70%),
+        radial-gradient(ellipse 600px 600px at 90% 90%,rgba(0,96,204,.08),transparent 70%),
+        var(--bg);
+      -webkit-font-smoothing:antialiased;display:flex;flex-direction:column;align-items:center;
+      padding:40px 20px 64px;
+    }
+    .topbar{ width:100%;max-width:620px;display:flex;align-items:center;justify-content:space-between;margin-bottom:36px; }
+    .topbar img{ height:30px;width:auto;object-fit:contain;opacity:.85; }
+    .topbar a.voltar{ font-size:13px;color:rgba(255,255,255,.5);text-decoration:none;transition:color .2s; }
+    .topbar a.voltar:hover{ color:#fff; }
+
+    .card{
+      width:100%;max-width:620px;background:rgba(7,13,26,.72);
+      border:1px solid rgba(0,100,220,.22);border-top:1px solid rgba(255,255,255,.10);
+      border-radius:24px;padding:40px 38px;
+      box-shadow:0 40px 90px rgba(0,0,0,.5),0 0 0 1px rgba(0,70,180,.06);
+    }
+    .eyebrow{ font-size:12px;font-weight:400;color:var(--azul);letter-spacing:.12em;text-transform:uppercase;margin-bottom:12px; }
+    h1{ font-size:clamp(26px,5vw,34px);font-weight:700;letter-spacing:-.025em;line-height:1.15;margin-bottom:12px; }
+    .sub{ font-size:15px;font-weight:300;color:rgba(255,255,255,.6);line-height:1.6;margin-bottom:34px; }
+
+    .field{ margin-bottom:26px; }
+    label.q{ display:block;font-size:15px;font-weight:600;color:#fff;margin-bottom:12px;letter-spacing:-.01em; }
+    label.q span{ color:var(--azul); }
+    input[type=text],input[type=email],input[type=tel]{
+      width:100%;background:rgba(3,8,18,.7);border:1px solid rgba(255,255,255,.12);
+      border-radius:12px;padding:14px 16px;color:#fff;font-family:inherit;font-size:15px;
+      transition:border-color .2s,box-shadow .2s;
+    }
+    input::placeholder{ color:rgba(255,255,255,.32); }
+    input:focus{ outline:none;border-color:var(--azul);box-shadow:0 0 0 3px rgba(0,128,255,.18); }
+
+    .options{ display:flex;flex-direction:column;gap:10px; }
+    .opt{
+      display:flex;align-items:center;gap:12px;cursor:pointer;
+      background:rgba(3,8,18,.6);border:1px solid rgba(255,255,255,.12);
+      border-radius:12px;padding:13px 16px;transition:border-color .2s,background .2s;
+    }
+    .opt:hover{ border-color:rgba(0,128,255,.4); }
+    .opt input{ position:absolute;opacity:0;pointer-events:none; }
+    .opt .dot{
+      width:20px;height:20px;border-radius:50%;border:2px solid rgba(255,255,255,.3);
+      flex-shrink:0;position:relative;transition:border-color .2s;
+    }
+    .opt .dot::after{
+      content:'';position:absolute;inset:3px;border-radius:50%;background:var(--azul);
+      transform:scale(0);transition:transform .2s;
+    }
+    .opt .txt{ font-size:14.5px;font-weight:400;color:rgba(255,255,255,.85); }
+    .opt input:checked ~ .dot{ border-color:var(--azul); }
+    .opt input:checked ~ .dot::after{ transform:scale(1); }
+    .opt:has(input:checked){ border-color:rgba(0,128,255,.55);background:rgba(0,90,210,.12); }
+
+    .btn{
+      display:flex;align-items:center;justify-content:center;width:100%;gap:8px;
+      background:linear-gradient(135deg,#0080ff,#0060cc);color:#fff;
+      font-family:inherit;font-size:16px;font-weight:600;border:none;border-radius:14px;
+      padding:16px;cursor:pointer;letter-spacing:-.01em;margin-top:8px;
+      transition:box-shadow .35s,transform .2s,opacity .2s;
+    }
+    .btn:hover{ box-shadow:0 0 40px rgba(0,128,255,.45);transform:translateY(-2px); }
+    .btn:disabled{ opacity:.65;cursor:default;transform:none;box-shadow:none; }
+
+    .err{
+      display:none;margin-top:16px;font-size:14px;color:#ff8e8e;
+      background:rgba(255,80,80,.08);border:1px solid rgba(255,80,80,.25);
+      border-radius:10px;padding:12px 14px;line-height:1.5;
+    }
+    .micro{ font-size:12px;color:rgba(255,255,255,.32);text-align:center;margin-top:18px; }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <img src="assets/images/logo_empresa/upscalemedia-transformed%20(4).png" alt="Ayres Marketing" onerror="this.style.display='none'">
+    <a class="voltar" href="index.html">← Voltar</a>
+  </div>
+
+  <div class="card">
+    <div class="eyebrow">Processo seletivo</div>
+    <h1>Fazer minha aplicação</h1>
+    <p class="sub">Preencha os campos abaixo. Nosso time vai analisar a sua operação e entrar em contato.</p>
+
+    <form id="leadForm" novalidate>
+      <div class="field">
+        <label class="q" for="nome">1. Qual seu nome? <span>*</span></label>
+        <input type="text" id="nome" name="nome" placeholder="Seu nome completo" autocomplete="name" required>
+      </div>
+
+      <div class="field">
+        <label class="q" for="email">2. Qual seu melhor e-mail? <span>*</span></label>
+        <input type="email" id="email" name="email" placeholder="voce@email.com" autocomplete="email" required>
+      </div>
+
+      <div class="field">
+        <label class="q" for="whatsapp">3. Qual seu número de WhatsApp? <span>*</span></label>
+        <input type="tel" id="whatsapp" name="whatsapp" placeholder="(31) 99999-9999" autocomplete="tel" required>
+      </div>
+
+      <div class="field">
+        <label class="q">4. Você é: <span>*</span></label>
+        <div class="options">
+          <label class="opt"><input type="radio" name="tipo" value="Infoprodutor"><span class="dot"></span><span class="txt">Infoprodutor</span></label>
+          <label class="opt"><input type="radio" name="tipo" value="Coprodutor / Estrategista"><span class="dot"></span><span class="txt">Coprodutor / Estrategista</span></label>
+          <label class="opt"><input type="radio" name="tipo" value="Gestor de tráfego"><span class="dot"></span><span class="txt">Gestor de tráfego</span></label>
+          <label class="opt"><input type="radio" name="tipo" value="Outro"><span class="dot"></span><span class="txt">Outro</span></label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="q">5. Qual o seu faturamento nos últimos 12 meses? <span>*</span></label>
+        <div class="options">
+          <label class="opt"><input type="radio" name="faturamento" value="Até R$50 Mil"><span class="dot"></span><span class="txt">Até R$50 Mil</span></label>
+          <label class="opt"><input type="radio" name="faturamento" value="De 100 a 200 Mil"><span class="dot"></span><span class="txt">De 100 a 200 Mil</span></label>
+          <label class="opt"><input type="radio" name="faturamento" value="De 200 mil a 500 mil"><span class="dot"></span><span class="txt">De 200 mil a 500 mil</span></label>
+          <label class="opt"><input type="radio" name="faturamento" value="+ R$500 mil"><span class="dot"></span><span class="txt">+ R$500 mil</span></label>
+        </div>
+      </div>
+
+      <button type="submit" class="btn" id="submitBtn">Enviar aplicação</button>
+      <div class="err" id="formError"></div>
+      <p class="micro">Seus dados são usados apenas para o contato do nosso time.</p>
+    </form>
+  </div>
+
+  <script>
+    const form = document.getElementById('leadForm');
+    const btn  = document.getElementById('submitBtn');
+    const err  = document.getElementById('formError');
+
+    function showErr(msg){ err.textContent = msg; err.style.display = 'block'; }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      err.style.display = 'none';
+
+      const data = {
+        nome: form.nome.value.trim(),
+        email: form.email.value.trim(),
+        whatsapp: form.whatsapp.value.trim(),
+        tipo: (form.querySelector('input[name="tipo"]:checked') || {}).value || '',
+        faturamento: (form.querySelector('input[name="faturamento"]:checked') || {}).value || ''
+      };
+
+      if (!data.nome || !data.email || !data.whatsapp) { showErr('Preencha nome, e-mail e WhatsApp.'); return; }
+      if (!data.tipo) { showErr('Selecione a opção da pergunta 4.'); return; }
+      if (!data.faturamento) { showErr('Selecione a opção da pergunta 5.'); return; }
+
+      btn.disabled = true; btn.textContent = 'Enviando...';
+      try {
+        const res = await fetch('/api/lead', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+        const json = await res.json().catch(() => ({}));
+        if (res.ok && json.ok) {
+          window.location.href = 'obrigado.html';
+        } else {
+          showErr('Não foi possível enviar agora. Tente novamente em instantes.');
+          btn.disabled = false; btn.textContent = 'Enviar aplicação';
+        }
+      } catch (e2) {
+        showErr('Erro de conexão. Verifique sua internet e tente novamente.');
+        btn.disabled = false; btn.textContent = 'Enviar aplicação';
+      }
+    });
+  </script>
+</body>
+</html>

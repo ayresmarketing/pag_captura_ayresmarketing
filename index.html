@@ -516,6 +516,10 @@
       .hero-headline { font-size:30px; }
     }
     @media (hover:none) { .btn-primary,.faq-question{cursor:pointer;} }
+
+    /* ── Reveal no celular: IntersectionObserver + CSS (sem ScrollTrigger → scroll fluido, sem jank) ── */
+    .m-reveal { opacity:0;transform:translateY(26px);transition:opacity .6s ease,transform .7s cubic-bezier(.16,1,.3,1);will-change:opacity,transform; }
+    .m-reveal.m-in { opacity:1;transform:none; }
   </style>
 </head>
 <body>
@@ -545,7 +549,7 @@
       </h1>
       <p class="hero-sub">Você já tem um produto bom. O que falta é uma operação de tráfego que venda todos os dias com previsibilidade, sem queimar margem e sem depender de sorte ou de mais um lançamento para o mês fechar no azul.</p>
       <div class="hero-cta-group">
-        <a href="#servicos" class="btn-primary btn-primary-lg btn-sweep">Fazer minha aplicação</a>
+        <a href="formulario.html" class="btn-primary btn-primary-lg btn-sweep">Fazer minha aplicação</a>
         <span class="hero-microcopy">Vagas limitadas · Apenas clientes selecionados</span>
       </div>
     </div>
@@ -749,9 +753,9 @@
       <p class="section-subheadline">Independente do momento da sua operação, temos um caminho para você.</p>
     </div>
     <div class="servicos-grid">
-      <div class="servico-card"><div class="servico-media"><img src="assets/images/box_preco_opt/paginas.jpg" alt="" loading="lazy" decoding="async"></div><div class="servico-nome">Criação de Páginas</div><div class="servico-preco">A partir de R$ 897</div><p class="servico-desc">Páginas que convertem, criadas do zero com estratégia, copy e estrutura técnica no ponto.</p><ul class="servico-features"><li>Páginas de captura, obrigado e vendas</li><li>Copy estratégica inclusa</li><li>Traqueamento configurado</li><li>Otimização de velocidade</li></ul><a href="https://wa.me/3188183316" target="_blank" rel="noopener" class="btn-primary" style="width:100%">Quero uma página</a></div>
-      <div class="servico-card destaque"><div class="servico-badge">Mais popular</div><div class="servico-media"><img src="assets/images/box_preco_opt/consultoria.jpg" alt="" loading="lazy" decoding="async"></div><div class="servico-nome">Consultoria de Negócio</div><div class="servico-preco">Valor sob consulta</div><p class="servico-desc">Uma hora focada no que realmente importa: entender onde está o gargalo da sua operação e sair com um plano claro de próximos passos.</p><ul class="servico-features"><li>1 hora de consultoria</li><li>Reunião gravada</li><li>Plano de negócio com próximos passos</li><li>Análise completa da operação</li><li>Materiais complementares (quando aplicável)</li></ul><a href="https://wa.me/3188183316" target="_blank" rel="noopener" class="btn-primary" style="width:100%">Fazer minha aplicação</a></div>
-      <div class="servico-card"><div class="servico-media"><img src="assets/images/box_preco_opt/gestao.jpg" alt="" loading="lazy" decoding="async"></div><div class="servico-nome">Gestão de Performance</div><div class="servico-preco">Sob consulta</div><p class="servico-desc">Para infoprodutores que querem uma operação de tráfego completa, estratégica e gerenciada por quem entende do negócio. Os entregáveis são definidos após a análise da sua operação, porque cada projeto é único.</p><ul class="servico-features"></ul><a href="https://wa.me/3188183316" target="_blank" rel="noopener" class="btn-primary" style="width:100%">Fazer minha aplicação</a></div>
+      <div class="servico-card"><div class="servico-media"><img src="assets/images/box_preco_opt/paginas.jpg" alt="" loading="lazy" decoding="async"></div><div class="servico-nome">Criação de Páginas</div><div class="servico-preco">A partir de R$ 897</div><p class="servico-desc">Páginas que convertem, criadas do zero com estratégia, copy e estrutura técnica no ponto.</p><ul class="servico-features"><li>Páginas de captura, obrigado e vendas</li><li>Copy estratégica inclusa</li><li>Traqueamento configurado</li><li>Otimização de velocidade</li></ul><a href="formulario.html" class="btn-primary" style="width:100%">Quero uma página</a></div>
+      <div class="servico-card destaque"><div class="servico-badge">Mais popular</div><div class="servico-media"><img src="assets/images/box_preco_opt/consultoria.jpg" alt="" loading="lazy" decoding="async"></div><div class="servico-nome">Consultoria de Negócio</div><div class="servico-preco">Valor sob consulta</div><p class="servico-desc">Uma hora focada no que realmente importa: entender onde está o gargalo da sua operação e sair com um plano claro de próximos passos.</p><ul class="servico-features"><li>1 hora de consultoria</li><li>Reunião gravada</li><li>Plano de negócio com próximos passos</li><li>Análise completa da operação</li><li>Materiais complementares (quando aplicável)</li></ul><a href="formulario.html" class="btn-primary" style="width:100%">Fazer minha aplicação</a></div>
+      <div class="servico-card"><div class="servico-media"><img src="assets/images/box_preco_opt/gestao.jpg" alt="" loading="lazy" decoding="async"></div><div class="servico-nome">Gestão de Performance</div><div class="servico-preco">Sob consulta</div><p class="servico-desc">Para infoprodutores que querem uma operação de tráfego completa, estratégica e gerenciada por quem entende do negócio. Os entregáveis são definidos após a análise da sua operação, porque cada projeto é único.</p><ul class="servico-features"></ul><a href="formulario.html" class="btn-primary" style="width:100%">Fazer minha aplicação</a></div>
     </div>
   </div>
 </section>
@@ -799,7 +803,7 @@
     <h2 class="cta-headline">Pronto para ter uma operação que vende todos os dias?</h2>
     <p class="cta-sub">Faça sua aplicação agora. Nossa equipe vai analisar sua operação e te mostrar exatamente o que precisa mudar.</p>
     <div class="cta-btn-wrapper">
-      <a href="#servicos" class="btn-primary btn-primary-lg btn-sweep">Fazer minha aplicação →</a>
+      <a href="formulario.html" class="btn-primary btn-primary-lg btn-sweep">Fazer minha aplicação →</a>
       <span class="cta-microcopy">Vagas limitadas · Processo seletivo · Resposta em até 48h</span>
     </div>
   </div>
@@ -894,19 +898,15 @@
     if(all.length>5){const last=all[all.length-1];gsap.to(last,{opacity:0,x:50,duration:.3,ease:EASE_IN,onComplete:()=>last.remove()});}
   }
 
-  /* QUAL CARDS — desktop: scroll-driven; mobile: aparece ao descer */
-  document.querySelectorAll('.qual-card-new').forEach((card,i)=>{
-    if(isMobile){
-      ScrollTrigger.create({trigger:card,start:'top 90%',once:true,
-        onEnter(){gsap.to(card,{opacity:1,y:0,duration:.6,ease:EASE_OUT});}
-      });
-    } else {
+  /* QUAL CARDS — desktop: scroll-driven (mobile usa o IntersectionObserver lá embaixo) */
+  if(!isMobile){
+    document.querySelectorAll('.qual-card-new').forEach((card)=>{
       ScrollTrigger.create({
         trigger:card,start:'top 90%',end:'top 40%',scrub:.7,
         onUpdate(s){gsap.set(card,{opacity:s.progress,y:(1-s.progress)*50});}
       });
-    }
-  });
+    });
+  }
 
   /* Frase final */
   gsap.set('#qualFinal',{y:24});
@@ -936,26 +936,30 @@
         window.scrollTo({top:c.getBoundingClientRect().top+scrollY+(i/4)*(c.offsetHeight-innerHeight),behavior:'smooth'});
       });
     });
-  } else {
-    /* Mobile: lista vertical — cada card aparece ao descer */
-    gsap.set('.metodologia-card',{opacity:0,y:30});
-    gsap.utils.toArray('.metodologia-card').forEach(card=>{
-      ScrollTrigger.create({trigger:card,start:'top 88%',once:true,
-        onEnter(){gsap.to(card,{opacity:1,y:0,duration:.6,ease:EASE_OUT});}
-      });
-    });
   }
+  /* Mobile: metodologia já é lista estática no CSS; o reveal fica por conta do IntersectionObserver abaixo */
 
-  /* REVEALS GENÉRICOS */
-  function rv(sel,ex={}){gsap.from(sel,{scrollTrigger:{trigger:sel,start:'top 78%',once:true},opacity:0,y:40,duration:.8,ease:EASE_OUT,...ex});}
-  rv('.secao-depoimentos .section-headline');rv('.secao-depoimentos .section-subheadline',{delay:.1,y:30});
-  rv('.secao-servicos .section-headline');rv('.secao-servicos .section-subheadline',{delay:.1,y:30});
-  rv('.cta-headline');rv('.cta-sub',{delay:.12,y:30});rv('.cta-btn-wrapper',{delay:.24,y:25});
-  gsap.from('.depoimento-card',{scrollTrigger:{trigger:'.depoimentos-grid',start:'top 80%',once:true},opacity:0,y:40,stagger:.15,duration:.7,ease:EASE_OUT});
-  gsap.from('.servico-card',{scrollTrigger:{trigger:'.servicos-grid',start:'top 80%',once:true},opacity:0,y:50,stagger:.15,duration:.7,ease:EASE_OUT});
-  gsap.from('.sobre-titulo,.sobre-texto',{scrollTrigger:{trigger:'.secao-sobre',start:'top 75%',once:true},opacity:0,x:-40,stagger:.1,duration:.8,ease:EASE_OUT});
-  gsap.from('.sobre-foto,.sobre-foto-placeholder',{scrollTrigger:{trigger:'.secao-sobre',start:'top 75%',once:true},opacity:0,x:40,duration:.8,ease:EASE_OUT});
-  gsap.from('.faq-item',{scrollTrigger:{trigger:'.faq-list',start:'top 82%',once:true},opacity:0,y:20,stagger:.08,duration:.6,ease:EASE_OUT});
+  /* REVEALS GENÉRICOS — só no desktop (mobile usa IntersectionObserver) */
+  if(!isMobile){
+    function rv(sel,ex={}){gsap.from(sel,{scrollTrigger:{trigger:sel,start:'top 78%',once:true},opacity:0,y:40,duration:.8,ease:EASE_OUT,...ex});}
+    rv('.secao-depoimentos .section-headline');rv('.secao-depoimentos .section-subheadline',{delay:.1,y:30});
+    rv('.secao-servicos .section-headline');rv('.secao-servicos .section-subheadline',{delay:.1,y:30});
+    rv('.cta-headline');rv('.cta-sub',{delay:.12,y:30});rv('.cta-btn-wrapper',{delay:.24,y:25});
+    gsap.from('.depoimento-card',{scrollTrigger:{trigger:'.depoimentos-grid',start:'top 80%',once:true},opacity:0,y:40,stagger:.15,duration:.7,ease:EASE_OUT});
+    gsap.from('.servico-card',{scrollTrigger:{trigger:'.servicos-grid',start:'top 80%',once:true},opacity:0,y:50,stagger:.15,duration:.7,ease:EASE_OUT});
+    gsap.from('.sobre-titulo,.sobre-texto',{scrollTrigger:{trigger:'.secao-sobre',start:'top 75%',once:true},opacity:0,x:-40,stagger:.1,duration:.8,ease:EASE_OUT});
+    gsap.from('.sobre-foto,.sobre-foto-placeholder',{scrollTrigger:{trigger:'.secao-sobre',start:'top 75%',once:true},opacity:0,x:40,duration:.8,ease:EASE_OUT});
+    gsap.from('.faq-item',{scrollTrigger:{trigger:'.faq-list',start:'top 82%',once:true},opacity:0,y:20,stagger:.08,duration:.6,ease:EASE_OUT});
+  } else {
+    /* MOBILE — um único IntersectionObserver para todos os reveals (zero ScrollTrigger = scroll liso) */
+    const sels='.qual-card-new,.metodologia-card,.secao-depoimentos .section-headline,.secao-depoimentos .section-subheadline,.secao-servicos .section-headline,.secao-servicos .section-subheadline,.cta-headline,.cta-sub,.cta-btn-wrapper,.depoimento-card,.servico-card,.sobre-titulo,.sobre-texto,.sobre-media,.faq-item';
+    const els=document.querySelectorAll(sels);
+    els.forEach(el=>el.classList.add('m-reveal'));
+    const io=new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('m-in'); io.unobserve(e.target); } });
+    },{threshold:0.12,rootMargin:'0px 0px -6% 0px'});
+    els.forEach(el=>io.observe(el));
+  }
 
   /* FAQ */
   document.querySelectorAll('.faq-question').forEach(btn=>{
@@ -970,6 +974,7 @@
   (function(){
     const cv=document.getElementById('ctaMoneyCanvas');
     if(!cv)return;
+    if(isMobile){ cv.style.display='none'; return; }   /* canvas pesado desligado no celular (performance) */
     const ctx=cv.getContext('2d');
     let W,H,bills=[];
 
@@ -1162,7 +1167,12 @@
     wrap.appendChild(buildRow(orderB,'proof-row-b'));
   })();
 
-  window.addEventListener('resize',()=>ScrollTrigger.refresh(),{passive:true});
+  /* Refresh só quando a LARGURA muda. No celular a barra de endereço muda a altura ao rolar
+     e dispara resize a cada quadro; refazer os ScrollTriggers aí causava o scroll travado. */
+  let lastW=window.innerWidth;
+  window.addEventListener('resize',()=>{
+    if(window.innerWidth!==lastW){ lastW=window.innerWidth; ScrollTrigger.refresh(); }
+  },{passive:true});
 </script>
 </body>
 </html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aplicação enviada · Ayres Marketing</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{ --azul:#0080ff; --bg:#03050a; }
+    *,*::before,*::after{ box-sizing:border-box;margin:0;padding:0; }
+    body{
+      font-family:'Montserrat',sans-serif;color:#fff;min-height:100vh;
+      background:
+        radial-gradient(ellipse 800px 600px at 50% 8%,rgba(0,128,255,.12),transparent 70%),
+        var(--bg);
+      -webkit-font-smoothing:antialiased;
+      display:flex;flex-direction:column;align-items:center;justify-content:center;
+      text-align:center;padding:48px 22px;
+    }
+    .logo{ height:32px;width:auto;object-fit:contain;opacity:.8;margin-bottom:48px; }
+    .check{
+      width:92px;height:92px;border-radius:50%;margin:0 auto 32px;
+      display:flex;align-items:center;justify-content:center;
+      background:radial-gradient(circle at 36% 28%,rgba(0,160,255,.25),rgba(0,90,210,.12));
+      border:1px solid rgba(0,128,255,.4);
+      box-shadow:0 0 0 8px rgba(0,128,255,.06),0 0 48px rgba(0,128,255,.35);
+      animation:pop .5s cubic-bezier(.16,1,.3,1) both;
+    }
+    @keyframes pop{ from{ transform:scale(.5);opacity:0; } to{ transform:scale(1);opacity:1; } }
+    .check svg{ width:46px;height:46px;stroke:#fff;stroke-width:3;fill:none;stroke-linecap:round;stroke-linejoin:round; }
+    h1{ font-size:clamp(28px,6vw,42px);font-weight:700;letter-spacing:-.03em;line-height:1.12;margin-bottom:18px;max-width:620px; }
+    h1 .grad{ background:linear-gradient(90deg,#0080ff,#00aaff);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent; }
+    p{ font-size:16px;font-weight:300;color:rgba(255,255,255,.66);line-height:1.7;max-width:520px;margin:0 auto 36px; }
+    a.btn{
+      display:inline-flex;align-items:center;justify-content:center;gap:8px;
+      background:linear-gradient(135deg,#0080ff,#0060cc);color:#fff;text-decoration:none;
+      font-size:15px;font-weight:600;border-radius:13px;padding:15px 30px;letter-spacing:-.01em;
+      transition:box-shadow .35s,transform .2s;
+    }
+    a.btn:hover{ box-shadow:0 0 40px rgba(0,128,255,.45);transform:translateY(-2px); }
+  </style>
+</head>
+<body>
+  <img class="logo" src="assets/images/logo_empresa/upscalemedia-transformed%20(4).png" alt="Ayres Marketing" onerror="this.style.display='none'">
+
+  <div class="check">
+    <svg viewBox="0 0 24 24"><polyline points="4,12.5 9.5,18 20,6.5"/></svg>
+  </div>
+
+  <h1>Aplicação <span class="grad">enviada com sucesso!</span></h1>
+  <p>Recebemos suas informações. Nosso time vai analisar a sua operação com cuidado e entrar em contato o quanto antes pelo WhatsApp ou e-mail que você informou. Fique de olho.</p>
+
+  <a class="btn" href="index.html">Voltar para a página</a>
+</body>
+</html>
